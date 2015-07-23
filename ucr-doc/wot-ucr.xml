@@ -395,6 +395,91 @@
         </ul>
     </usecase>
 
+    <usecase id="home_water_awareness_and_conservation" author="Souleiman Hasan and Edward Curry" domain="home_automation">
+        <title>Home Water Awareness and Conservation</title>
+        <p>John is keen to lower his water footprint to feel he is helping with saving water, a scarce resource nationally and globally, and to save money on his water bill. 
+			John's dishwasher has various programs that can consume various amounts of water. 
+			John sets monthly targets of water consumption for himself which dictate his consumption behaviour, such as his usage of the dishwasher.
+			</p>
+        <p>see https://lists.w3.org/Archives/Public/public-wot-ig/2015Mar/0046.html</p>
+		<details>
+            <title>Use case description</title>
+			<p>Get aware of domestic water consumption, set personal targets based on that, and be able to make informed decision when using a water consumption thing such as a dishwasher.</p>
+			<p>Features include getting realtime updates from water consumption things such as taps and shower, set water consumption targets, recommend thing's usage behaviour to the user such as when and what program to use at a dishwasher.</p>
+			<p>Target Use: Home</p>
+        </details>
+		<details>
+            <title>Assumptions</title>
+			<p>John has installed networked water consumption things at his place such as his dishwasher, and installed simple networked water usage sensors on other things like taps and shower.</p>
+			<p>John subscribes with a Home Water Management Provider (HWMP) that provides him with simple method to connect his water consumption sensors to the HWMP service through the sensors Web interfaces.</p>
+			<p>The Home Water Management Provider service does simple aggregations to establish the water consumption realtime stats of John's house.</p>
+			<p>John opens a Web based application on his smartphone that is served by his Home Water Management Provider and sets his water consumption target for the month. </p>
+			<p>John opens the dishwasher to load it.</p>
+			<p>John's dishwasher accesses the HWMP service to know the consumption stats and usage targets, and recommend a suitable program for John to meet his target through a small screen.</p>
+			<p>John can adjust his usage of water through various resources to keep up with the target.</p>
+        </details>
+		<details>
+            <title>Usage scenario </title>
+			<p>Water consumption things at home shall be equipped with water sensors. Things include:  taps, shower, dishwasher, washing machine, etc.</p>
+			<p>John's dishwasher has various programs that can consume various amounts of water. </p>
+        </details>			
+        <details>
+            <title>How does this translate to a technical Description</title>
+            <p>Water sensors are attached to various water consumption things at John's place, e.g. taps, shower, dishwasher, washing machine, etc.
+				Sensors' readings of water consumption can be pulled through a firewall or pushed by the sensors to a cloud service.
+				A Home Water Management Provider (HWMP) provides a cloud service that does simple aggregations over water consumption in John's house.
+				The HWMP service communicates with the water sensors through Web protocols.
+				John can easily access his home water Web based application through a laptop or phone to set his target for the month.
+				When John opens his dishwasher, it can access John's HWMP service and recommend the best schedule and program to meet his target.</p>
+        </details>
+        <details>
+            <title>What application domains are related (e.g. referring to the taxonomy)</title>
+            <p>main: smart home / home automation / water usage</p>
+			<p>related: smart home / home automation / Smart watering systems indoors and outdoors</p>
+        </details>
+        <details>
+            <title>What interaction pattern with or btw things can be observed </title>
+            <p>Things catalogue: thing register with the Home Water Management Provider (HWMP )'s catalogue in the cloud under John's house entry.</p>
+			<p>John interacts with a Web based agent, a frontend interface to the HWMP service of water consumption and target in John's house.</p>
+			<p>John interacts with a water consumption thing (e.g. dishwasher) through the control panel and screen.</p>
+			<p>Thing (dishwasher) pulls ready-to-serve data and recommendation from the HWMP service and presents to John.</p>
+        </details>
+        <details>
+            <title>Which Aspects are not considered </title>
+			<p>Life cycle of devices, services and applications</p>
+			<p>Data analysis models of services</p>
+			<p>Discovery of things</p>
+			<p>Installation of sensors</p>
+			<p>Dealing with faults</p>
+			<p>Replacing sensors</p>
+			<p>Taking sensors out of operations</p>
+        </details>
+        <ul>
+            <li reqref="resource-description">Things such as water taps and a dishwasher shall be described in a standard way so the cloud-based Home Water Management Provider analytics service can assume how data is represented</li>
+            <li reqref="push">Water usage things like taps needs a mechanism to push data from sensors to cloud services such as the Home Water Management Provider analytics service</li>
+            <li reqref="embedded-runtime">Logic works locally at things, given also information pulled from cloud services, to do some local aggregations for example, to notify the user with contextualized information such as a message on the dishwasher control panel LCD</li>			
+            <li reqref="thing-configuration">Configuration of things using simple mechanism like a URL by the user to specify the cloud-based service API, such as the Home Water Management Provider analytics service</li>						
+            <li reqref="thing-auto-registration">Things register themselves with the cloud-based service and the Web catalogue, after they get configured with the respective APIs</li>		
+            <li reqref="things-web-catalogue">Cataloguing things such as water taps and devices on the cloud using IDs, e.g. IRIs</li>					
+        </ul>
+    </usecase>
+	
+	<req id="thing-configuration">
+        <title>Thing Configuration</title>
+        <p>The ability to configure a thing by setting up some parameters such as a RESTful API that the thing can use later to push events to, etc.</p>
+        <p>A Web access mechanism to configure thing can be considered as a particular easy to use instance.</p>		
+    </req>
+	
+	<req id="thing-auto-registration">
+        <title>Thing Auto Registration</title>
+        <p>The ability of things to register themselves with cloud-based services in a standard mechanism.</p>		
+    </req>
+	
+	<req id="things-web-catalogue">
+        <title>Things Web Catalogue</title>
+        <p>The ability of a WoT sysetm to keep track of things registered within it. The catalogue can be used by other things or by cloud services for discovery, configuration, etc..</p>		
+    </req>	
+
 
     <req id="resource-description">
         <title>Resource Description</title>
@@ -498,4 +583,40 @@
             <li reqref="data-exchange-format"/>
         </ul>
     </tech>
+    
+    	
+    <tech id="json-ld" href="http://www.w3.org/TR/json-ld/">
+        <title>A JSON-based Serialization for Linked Data (JSON-LD)</title>
+        <p>JSON-LD is a standard data model for serializing Linked Data. It can be through of as a serialization of RDF, although JSON-LD covers RDF and extends it, please have a look at section http://www.w3.org/TR/json-ld/#relationship-to-rdf in the JSON-LD specification. </p>
+        <ul>
+            <li reqref="resource-description">JSON-LD is a data model for describing things meta-data and data, in the friendly JSON format, and according to the Linked Data principles http://www.w3.org/DesignIssues/LinkedData.html.</li>
+        </ul>
+    </tech>		
+	
+    <tech id="iri" href="http://www.ietf.org/rfc/rfc3987.txt">
+        <title>Internationalized Resource Identifiers (IRIs)</title>
+        <p>IRIs are a means to give universal identifiers for things on the Web.</p>
+        <ul>
+            <li reqref="resource-description">JSON-LD depends on IRIs as identifiers</li>
+			<li reqref="things-web-catalogue">IRIs can be used to keep track of identifiers of things registered in the catalogue</li>
+        </ul>
+    </tech>	
+
+    <tech id="uri" href="http://www.ietf.org/rfc/rfc3986.txt">
+        <title>Uniform Resource Identifier (URI)</title>
+        <p>URIs are a means to give universal identifiers for things on the Web.</p>
+        <ul>
+            <li reqref="resource-description">JSON-LD depends on IRIs, which are similr to URIs to a great extent. Refer to http://www.w3.org/TR/json-ld/#how-to-read-this-document</li>
+			<li reqref="things-web-catalogue">URIs can be used to keep track of identifiers of things registered in the catalogue</li>			
+        </ul>
+    </tech>		
+	
+    <tech id="rest" href="http://rest.elkstein.org/">
+        <title>Representational State Transfer (REST)</title>
+        <p>REST is a stateless, client-server, protocol which is based on HTTP.</p>
+        <ul>
+			<li reqref="thing-configuration">RESTful APIs at the things can be used to configure them. Example configuration is by PUTting a RESTful API URI of a cloud service that the thing an later use.</li>			
+			<li reqref="thing-auto-registration">RESTful APIs of the web catalogue can be used by things to register themselves in the catalogue.</li>						
+        </ul>
+    </tech>	
 </ucr>
